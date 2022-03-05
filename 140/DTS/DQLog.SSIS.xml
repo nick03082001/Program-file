@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Log settings file for Data Quality SSIS components
+-->
+<configuration>
+  <configSections>
+    <section name="loggingConfiguration" type="Microsoft.Practices.EnterpriseLibrary.Logging.Configuration.LoggingSettings, Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c" />
+  </configSections>
+  <loggingConfiguration name="Logging Application Block" tracingEnabled="true"
+    defaultCategory="" logWarningsWhenNoCategoriesMatch="true">
+    <listeners>
+      <add fileName="%APPDATA%\SSDQS\Log\DQSSISLog.log" footer="" formatter="Custom Text Formatter"
+        header="" rollFileExistsBehavior="Increment" rollInterval="None"
+        rollSizeKB="20000" timeStampPattern="yyyy-MM-dd" listenerDataType="Microsoft.Practices.EnterpriseLibrary.Logging.Configuration.RollingFlatFileTraceListenerData, Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c"
+        traceOutputOptions="None" filter="All" type="Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners.RollingFlatFileTraceListener, Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c"
+        name="Rolling Flat File Trace Listener" />
+    </listeners>
+    <formatters>
+	  <add template="{timestamp(local)}|[{threadName}]|{dictionary({value}|)}{message}"
+        type="Microsoft.Practices.EnterpriseLibrary.Logging.Formatters.TextFormatter, Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c"
+        name="Custom Text Formatter" />
+    </formatters>
+    <logFilters>
+      <add enabled="true" type="Microsoft.Practices.EnterpriseLibrary.Logging.Filters.LogEnabledFilter, Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c"
+        name="LogEnabled Filter" />
+    </logFilters>
+    <categorySources>
+	  <add switchValue="Information" name="Microsoft.Ssdqs.Infra.Database.DBUtility">
+        <listeners>
+          <add name="Rolling Flat File Trace Listener" />
+        </listeners>
+      </add>      
+      <add switchValue="Information" name="Microsoft.Ssdqs.Index">
+        <listeners>
+          <add name="Rolling Flat File Trace Listener" />
+        </listeners>
+      </add>
+      <add switchValue="Information" name="Microsoft.Ssdqs.Cleansing">
+        <listeners>
+          <add name="Rolling Flat File Trace Listener" />
+        </listeners>
+      </add>
+	  <add switchValue="Information" name="Microsoft.Ssdqs.Core">
+        <listeners>
+          <add name="Rolling Flat File Trace Listener" />
+        </listeners>
+      </add>
+      <add switchValue="Information" name="Microsoft.Ssdqs.Infra">
+        <listeners>
+          <add name="Rolling Flat File Trace Listener" />
+        </listeners>
+      </add>
+      <add switchValue="Information" name="Root">
+        <listeners>
+          <add name="Rolling Flat File Trace Listener" />
+        </listeners>
+      </add>
+    </categorySources>
+    <specialSources>
+      <allEvents switchValue="All" name="All Events" />
+      <notProcessed switchValue="All" name="Unprocessed Category" />
+      <errors switchValue="All" name="Logging Errors &amp; Warnings">
+        <listeners>
+          <add name="Rolling Flat File Trace Listener" />
+        </listeners>
+      </errors>
+    </specialSources>
+  </loggingConfiguration>
+</configuration>
